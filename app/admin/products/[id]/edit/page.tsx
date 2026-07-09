@@ -7,7 +7,7 @@ import { requireAdminConfig } from "@/lib/admin-guard";
 type Props = { params: Promise<{ id: string }> };
 export const metadata: Metadata = { title: "Editeaza produs" };
 export default async function EditProductPage({ params }: Props) {
-  requireAdminConfig();
+  await requireAdminConfig();
   const { id } = await params;
   const product = await getProductById(id);
   if (!product) notFound();

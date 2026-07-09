@@ -2,11 +2,37 @@
 
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
+import { cookies } from "next/headers";
 import { createClient } from "@/lib/supabase/server";
 import { hasSupabaseEnv } from "@/lib/supabase/env";
 import { slugify } from "@/lib/utils";
 
 type ActionResult = { ok: boolean; message: string };
+export async function envAdminLogin(formData: FormData) {
+  const expectedEmail = process.env.ADMIN_EMAIL;
+  const expectedPassword = process.env.ADMIN_PASSWORD;
+  const email = String(formData.get("email") || "").trim().toLowerCase();
+  const password = String(formData.get("password") || "");
+
+  if (!expectedEmail || !expectedPassword) {
+    return { ok: false, message: "Adminul nu este configurat in Vercel." };
+  }
+
+  if (email !== expectedEmail.toLowerCase() || password !== expectedPassword) {
+    return { ok: false, message: "Email sau parola incorecta." };
+  }
+
+  const cookieStore = await cookies();
+  cookieStore.set("resell_env_admin", "1", {
+    httpOnly: true,
+    sameSite: "lax",
+    secure: process.env.NODE_ENV === "production",
+    path: "/",
+    maxAge: 60 * 60 * 24 * 7
+  });
+
+  return { ok: true, message: "Autentificat." };
+}
 function required(formData: FormData, key: string) {
   const value = String(formData.get(key) || "").trim();
   if (!value) throw new Error(`Campul ${key} este obligatoriu.`);
@@ -108,6 +134,8 @@ export async function updateRequestStatus(formData: FormData) {
 }
 
 export async function signOutAdmin() {
+  const cookieStore = await cookies();
+  cookieStore.delete("resell_env_admin");
   if (hasSupabaseEnv()) {
     const supabase = await createClient();
     await supabase.auth.signOut();
