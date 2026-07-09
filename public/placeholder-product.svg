@@ -1,0 +1,7 @@
+<svg width="1200" height="900" viewBox="0 0 1200 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="900" fill="#111113"/>
+  <rect x="92" y="92" width="1016" height="716" rx="30" fill="#24252b"/>
+  <path d="M317 586c130-103 211-154 245-154 50 0 106 69 178 69 46 0 98-31 158-92l104 177H317Z" fill="#3a3d46"/>
+  <circle cx="430" cy="330" r="70" fill="#4b505c"/>
+  <text x="600" y="720" text-anchor="middle" font-family="Arial" font-size="52" font-weight="700" fill="#f7f4ef">RESELL PRODUCT</text>
+</svg>

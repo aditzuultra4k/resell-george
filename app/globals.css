@@ -1,0 +1,21 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+  --background: #09090b;
+  --foreground: #fafafa;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background:
+    radial-gradient(circle at top left, rgba(167, 243, 208, 0.08), transparent 32rem),
+    linear-gradient(180deg, #09090b 0%, #111113 55%, #f7f4ef 55%, #f7f4ef 100%);
+  color: var(--foreground);
+}
+input, textarea, select { color-scheme: light; }
+.light-panel { color: #111113; }
