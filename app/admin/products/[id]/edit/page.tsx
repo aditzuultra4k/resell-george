@@ -3,9 +3,11 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ProductForm } from "@/components/admin/product-form";
 import { getProductById } from "@/lib/queries";
+import { requireAdminConfig } from "@/lib/admin-guard";
 type Props = { params: Promise<{ id: string }> };
 export const metadata: Metadata = { title: "Editeaza produs" };
 export default async function EditProductPage({ params }: Props) {
+  requireAdminConfig();
   const { id } = await params;
   const product = await getProductById(id);
   if (!product) notFound();

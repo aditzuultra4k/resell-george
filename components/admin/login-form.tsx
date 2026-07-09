@@ -15,8 +15,12 @@ export function LoginForm() {
       event.preventDefault();
       const formData = new FormData(event.currentTarget);
       startTransition(async () => {
-        if (!process.env.NEXT_PUBLIC_SUPABASE_URL) {
+        if (!process.env.NEXT_PUBLIC_SUPABASE_URL && window.location.hostname === "localhost") {
           router.push("/admin");
+          return;
+        }
+        if (!process.env.NEXT_PUBLIC_SUPABASE_URL) {
+          setError("Configureaza Supabase in Vercel pentru login admin.");
           return;
         }
         const supabase = createClient();
